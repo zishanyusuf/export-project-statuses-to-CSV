@@ -165,7 +165,7 @@ async function getAsanaPortfolioItems(portfolio_gid, headers) {
     // For more information on this API endpoint, see: https://developers.asana.com/reference/getitemsforportfolio
     // For more information on choosing which fields are returned in the response, see: https://developers.asana.com/docs/inputoutput-options
     const resp = await fetch(
-      `https://app.asana.com/api/1.0/portfolios/${portfolio_gid}/items?opt_fields=name,resource_type,archived,color,created_at,current_status_update.(created_by.name|status_type|created_at|text),notes,modified_at,public,owner.name,start_on,due_on`,
+      `https://app.asana.com/api/1.0/portfolios/${portfolio_gid}/items?opt_fields=name,resource_type,archived,color,created_at,current_status_update.(created_by.name|status_type|created_at|text),notes,modified_at,public,owner.name,start_on,due_on,owner`,
       headers
     );
 
@@ -236,6 +236,7 @@ function flattenProjectFields(project) {
     current_status_update,
     start_on,
     due_on,
+    owner
   } = project;
 
   const newProject = {
@@ -250,6 +251,7 @@ function flattenProjectFields(project) {
     "Status created at": current_status_update?.created_at || "",
     "Start on": start_on || "",
     "Due on": due_on || "",
+    "Owner": owner || "",
   };
 
   return newProject;
